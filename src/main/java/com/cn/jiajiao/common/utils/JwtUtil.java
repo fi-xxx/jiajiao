@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -63,7 +64,7 @@ public class JwtUtil {
      * @param username 用户名
      * @return JWT token
      */
-    public static String generateToken(Long userId, String username) {
+    public static String generateToken(String userId, String username) {
         Date now = new Date();
         // 设置token过期时间为15分钟
         Date expiration = new Date(now.getTime() + 15 * 60 * 1000);

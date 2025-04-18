@@ -22,7 +22,7 @@ public class TokenService {
      * @param username 用户名
      * @return 包含accessToken和refreshToken的对象
      */
-    public TokenPair generateTokens(Long userId, String username) {
+    public TokenPair generateTokens(String userId, String username) {
         // 生成访问令牌
         String accessToken = JwtUtil.generateToken(userId, username);
         
@@ -39,19 +39,19 @@ public class TokenService {
     /**
      * 使用刷新令牌获取新的访问令牌
      * @param refreshToken 刷新令牌
-     * @param username 用户名
+     * @param phone 手机号
      * @return 新的访问令牌
      */
-    public String refreshAccessToken(String refreshToken, String username) {
+    public String refreshAccessToken(String refreshToken, String phone) {
         String redisKey = REFRESH_TOKEN_PREFIX + refreshToken;
-        Long userId = (Long) redisTemplate.opsForValue().get(redisKey);
+        String userId = (String) redisTemplate.opsForValue().get(redisKey);
         
         if (userId == null) {
             throw new RuntimeException("刷新令牌无效或已过期");
         }
         
         // 生成新的访问令牌
-        return JwtUtil.generateToken(userId, username);
+        return JwtUtil.generateToken(userId, phone);
     }
 
     /**

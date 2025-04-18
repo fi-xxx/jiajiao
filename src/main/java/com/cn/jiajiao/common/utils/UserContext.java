@@ -1,14 +1,14 @@
 package com.cn.jiajiao.common.utils;
 
 public class UserContext {
-    private static final ThreadLocal<Long> userIdThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<String> userIdThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<String> phoneThreadLocal = new ThreadLocal<>();
 
-    public static void setUserId(Long userId) {
+    public static void setUserId(String userId) {
         userIdThreadLocal.set(userId);
     }
 
-    public static Long getUserId() {
+    public static String getUserId() {
         return userIdThreadLocal.get();
     }
 

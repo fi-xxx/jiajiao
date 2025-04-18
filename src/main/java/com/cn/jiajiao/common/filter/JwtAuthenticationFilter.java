@@ -20,8 +20,9 @@ import java.util.List;
 public class JwtAuthenticationFilter implements Filter {
 
     private static final List<String> EXCLUDE_PATHS = Arrays.asList(
-            "/api/auth/login",
-            "/api/auth/register",
+            "/parents/login",
+            "/parents/register",
+            "/parents/refresh",
             "/error"
     );
 
@@ -51,7 +52,7 @@ public class JwtAuthenticationFilter implements Filter {
             Claims claims = JwtUtil.parseToken(token);
             
             // 获取用户信息
-            Long userId = claims.get("userId", Long.class);
+            String userId = claims.get("userId", String.class);
             String phone = claims.getSubject();
             
             // 保存到ThreadLocal

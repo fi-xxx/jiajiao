@@ -25,6 +25,10 @@ public class R<T> {
         return new R<>(400, message, null);
     }
 
+    public static <T> R<T> error(int code,String message) {
+        return new R<>(code, message, null);
+    }
+
     public static <T> R<T> custom(int code, String message, T data) {
         return new R<>(code, message, data);
     }

@@ -2,23 +2,23 @@ package com.cn.jiajiao.config;
 
 import com.cn.jiajiao.common.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
 
 @Configuration
 @RequiredArgsConstructor
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final ServletContext servletContext;
 
-    @Override
-    public void configureServletHandling(org.springframework.web.servlet.config.annotation.ServletRegistrationBean<?> registration) {
-        // 注册JWT过滤器
-        FilterRegistration.Dynamic jwtFilter = servletContext.addFilter("jwtAuthenticationFilter", jwtAuthenticationFilter);
-        jwtFilter.addMappingForUrlPatterns(null, false, "/*");
+    @Bean
+    public FilterRegistrationBean<JwtAuthenticationFilter> jwtFilterRegistration() {
+        FilterRegistrationBean<JwtAuthenticationFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(jwtAuthenticationFilter);
+        registration.addUrlPatterns("/*"); // 拦截所有请求
+        registration.setName("jwtAuthenticationFilter");
+        registration.setOrder(1); // 过滤器优先级
+        return registration;
     }
-} 
+}
