@@ -9,6 +9,7 @@ import com.cn.jiajiao.domain.dto.ParentDto;
 import com.cn.jiajiao.domain.po.Parent;
 import com.cn.jiajiao.domain.vo.ParentVo;
 import com.cn.jiajiao.service.ParentService;
+import com.cn.jiajiao.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ParentServiceImpl extends ServiceImpl<ParentDao,Parent> implements ParentService {
+
+    private final TokenService tokenService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -54,9 +57,11 @@ public class ParentServiceImpl extends ServiceImpl<ParentDao,Parent> implements 
         // 转换为VO对象
         ParentVo parentVo = new ParentVo();
         BeanUtils.copyProperties(parent, parentVo);
-        // TODO: 生成token并设置
-        // TODO： 设置拦截器，客户端每次发送请求都先检查token
-        parentVo.setToken("mock_token");
+        
+        // 生成token
+        TokenService.TokenPair tokenPair = tokenService.generateTokens(parent.getId(), parent.getPhone());
+        parentVo.setAccessToken(tokenPair.getAccessToken());
+        parentVo.setRefreshToken(tokenPair.getRefreshToken());
         
         return parentVo;
     }

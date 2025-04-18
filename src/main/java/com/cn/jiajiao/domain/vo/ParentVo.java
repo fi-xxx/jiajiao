@@ -7,9 +7,9 @@ import java.io.Serializable;
 public class ParentVo implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    private String id;
+    private Long id;
     private String phone;
     private String icon;
-    private String address;
-    private String token;
+    private String accessToken;
+    private String refreshToken;
 }

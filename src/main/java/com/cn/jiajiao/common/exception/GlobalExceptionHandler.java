@@ -24,6 +24,15 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 处理未授权异常
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    public R<Void> handleUnauthorizedException(UnauthorizedException e) {
+        log.error("未授权异常：{}", e.getMessage());
+        return R.error(401, e.getMessage());
+    }
+
+    /**
      * 处理参数校验异常
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
