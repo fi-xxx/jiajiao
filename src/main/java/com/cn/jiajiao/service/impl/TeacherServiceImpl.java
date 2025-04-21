@@ -20,7 +20,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
     @Override
     public List<TeacherVo> getBySubject(String subject) {
         LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Teacher::getTeachSub, subject);
+        wrapper.eq(Teacher::getTeacherSub, subject);
         List<Teacher> teachers = list(wrapper);
         return convertToVoList(teachers);
     }
@@ -28,7 +28,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
     @Override
     public List<TeacherVo> getBySubjectAndGrade(String subject, String grade) {
         LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Teacher::getTeachSub, subject)
+        wrapper.eq(Teacher::getTeacherSub, subject)
                .eq(Teacher::getGrade, grade);
         List<Teacher> teachers = list(wrapper);
         return convertToVoList(teachers);

@@ -6,10 +6,11 @@ import lombok.Data;
 public class TeacherDto {
     private Integer id;
     private String teacherPhonum;
+    private String teacherName;
     private String teacherSex;
-    private String teacher_icon;
+    private String teacherIcon;
     private String teacherAddress;
-    private String teacher_exper;
-    private String teacher_sub;
+    private String teacherExper;
+    private String teacherSub;
     private String grade;
 }

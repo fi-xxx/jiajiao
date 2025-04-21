@@ -37,7 +37,7 @@ public class ParentServiceImpl extends ServiceImpl<ParentDao,Parent> implements 
         // 密码加密
         parent.setPassword(MD5Util.encrypt(parentDto.getPassword()));
         // 设置默认头像
-        parent.setIcon("default.jpg");
+        parent.setIcon("person.png");
         
         return this.save(parent);
     }

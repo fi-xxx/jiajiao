@@ -9,7 +9,7 @@ import lombok.Data;
 public class Parent {
     @TableId(type = IdType.AUTO)
     private String id;
-    @TableField("phonenum")
+    @TableField("parent_phone")
     private String phone;
     @TableField("paswd")
     private String password;
