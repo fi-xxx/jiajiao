@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class TeacherVo {
-    private String id;
-    private String teacherName;
-    private String teacherSex;
-    private String teacherExper;
-    private String teacherPhone;
-    private String address;
-    private String teacherSub;
+    private Integer id;
+    private String teachPhonum;
+    private String teachName;
+    private String teachSex;
+    private String teachIcon;
+    private String teachAddress;
+    private String teachExper;
+    private String teachSub;
     private String grade;
-    private String icon;
 }

@@ -1,5 +1,7 @@
 package com.cn.jiajiao.common.filter;
 
+import cn.hutool.json.JSONUtil;
+import com.cn.jiajiao.common.R;
 import com.cn.jiajiao.common.exception.UnauthorizedException;
 import com.cn.jiajiao.common.utils.JwtUtil;
 import com.cn.jiajiao.common.utils.UserContext;
@@ -23,7 +25,8 @@ public class JwtAuthenticationFilter implements Filter {
             "/parents/login",
             "/parents/register",
             "/parents/refresh",
-            "/error"
+            "/error",
+            "/parents"
     );
 
     @Override
@@ -44,8 +47,10 @@ public class JwtAuthenticationFilter implements Filter {
         try {
             // 获取token
             String token = getTokenFromRequest(httpRequest);
+            // token不为null 不为空
             if (!StringUtils.hasText(token)) {
-                throw new UnauthorizedException("未登录或token已过期");
+                writeUnauthorized(httpResponse,"未登录或登录过期");
+                return;
             }
 
             // 解析token
@@ -62,8 +67,9 @@ public class JwtAuthenticationFilter implements Filter {
             // 继续执行过滤器链
             chain.doFilter(request, response);
         } catch (Exception e) {
+            log.error("拦截到请求: {}" ,httpRequest.getRequestURI());
             log.error("token验证失败", e);
-            throw new UnauthorizedException("未登录或token已过期");
+            writeUnauthorized(httpResponse,"未登录或登录过期");
         } finally {
             // 清除ThreadLocal中的数据
             UserContext.clear();
@@ -90,5 +96,11 @@ public class JwtAuthenticationFilter implements Filter {
     @Override
     public void destroy() {
         // 销毁方法
+    }
+
+    private void writeUnauthorized(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(JSONUtil.toJsonStr(R.error(401, message)));
     }
 } 
