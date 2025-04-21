@@ -1,4 +1,4 @@
-package com.cn.jiajiao.service.serviceImpl;
+package com.cn.jiajiao.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,7 +62,7 @@ public class ParentServiceImpl extends ServiceImpl<ParentDao,Parent> implements 
         TokenService.TokenPair tokenPair = tokenService.generateTokens(parent.getId(), parent.getPhone());
         parentVo.setAccessToken(tokenPair.getAccessToken());
         parentVo.setRefreshToken(tokenPair.getRefreshToken());
-        
+        //当用户短时间内未登出多次登录，则会生成多个refreshToken，
         return parentVo;
     }
 }

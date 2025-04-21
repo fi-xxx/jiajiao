@@ -9,6 +9,20 @@ spring:
       url: jdbc:mysql://localhost:3306/jiajiao?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 1234
+      initial-size: 5                     # 初始化连接数
+      min-idle: 5                         # 最小空闲连接
+      max-active: 20                      # 最大连接数
+      max-wait: 60000                     # 获取连接最大等待时间（毫秒）
+      time-between-eviction-runs-millis: 60000    # 检测空闲连接间隔（60s）
+      min-evictable-idle-time-millis: 300000      # 连接最小空闲时间（5分钟）
+
+      validation-query: SELECT 1          # 用来检测连接是否有效
+      test-while-idle: true               # 检测空闲连接（强烈建议开启）
+      test-on-borrow: false               # 获取连接时不检测（性能好）
+      test-on-return: false               # 归还连接时不检测（性能好）
+
+      keep-alive: true                    # 启用保活机制，防止被 MySQL 干掉
+      phy-max-use-count: 1000             # 单个连接最多被使用多少次（超过就换新）
   main:
     allow-circular-references: true
     allow-bean-definition-overriding: true
