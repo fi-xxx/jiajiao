@@ -63,7 +63,6 @@ public class JwtAuthenticationFilter implements Filter {
             // 保存到ThreadLocal
             UserContext.setUserId(userId);
             UserContext.setPhone(phone);
-            
             // 继续执行过滤器链
             chain.doFilter(request, response);
         } catch (Exception e) {
