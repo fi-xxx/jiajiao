@@ -1,5 +1,6 @@
 package com.cn.jiajiao.service;
 
+import com.cn.jiajiao.common.exception.UnauthorizedException;
 import com.cn.jiajiao.common.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -47,7 +48,7 @@ public class TokenService {
         String userId = (String) redisTemplate.opsForValue().get(redisKey);
         
         if (userId == null) {
-            throw new RuntimeException("刷新令牌无效或已过期");
+            throw new UnauthorizedException("刷新令牌无效或已过期");
         }
         
         // 生成新的访问令牌
