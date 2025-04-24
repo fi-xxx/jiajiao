@@ -2,6 +2,7 @@ package com.cn.jiajiao.controller;
 
 import com.cn.jiajiao.common.R;
 import com.cn.jiajiao.domain.po.Reward;
+import com.cn.jiajiao.domain.vo.RewardVo;
 import com.cn.jiajiao.service.RewardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,8 @@ public class RewardController {
      * @return 奖学券列表
      */
     @GetMapping
-    public R<List<Reward>> listAll() {
-        List<Reward> rewords = rewordService.listAll();
+    public R<List<RewardVo>> listAll() {
+        List<RewardVo> rewords = rewordService.listAll();
         return R.success(rewords);
     }
 } 
