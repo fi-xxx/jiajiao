@@ -22,4 +22,7 @@ public interface TeacherService extends IService<Teacher> {
      * @return 教师列表
      */
     List<TeacherVo> getBySubjectAndGrade(String subject, String grade);
+
+    TeacherVo getByPhone(String phone);
+
 } 

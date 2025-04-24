@@ -1,5 +1,6 @@
 package com.cn.jiajiao.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cn.jiajiao.dao.TeacherDao;
@@ -29,13 +30,22 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherDao, Teacher> impleme
     public List<TeacherVo> getBySubjectAndGrade(String subject, String grade) {
         LambdaQueryWrapper<Teacher> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Teacher::getTeacherSub, subject)
-               .eq(Teacher::getGrade, grade);
+                .eq(Teacher::getGrade, grade);
         List<Teacher> teachers = list(wrapper);
         return convertToVoList(teachers);
     }
 
+    @Override
+    public TeacherVo getByPhone(String phone) {
+        Teacher teacher = lambdaQuery()
+                .eq(Teacher::getTeacherPhone, phone)
+                .one();
+        return BeanUtil.copyProperties(teacher, TeacherVo.class);
+    }
+
     /**
      * 将Teacher列表转换为TeacherVo列表
+     *
      * @param teachers Teacher列表
      * @return TeacherVo列表
      */
